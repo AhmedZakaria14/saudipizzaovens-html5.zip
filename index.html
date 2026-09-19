@@ -227,7 +227,7 @@ if (window.navigation && window.self !== window.top) {
 						links.forEach(function(link){
 							link.classList.add('nashar-credit-link');
 							link.setAttribute('aria-label','زيارة موقع NasharHub.com');
-							link.innerHTML='<span class="nashar-text">NasharHub.com</span>';
+							if(!link.querySelector('.nashar-text')){link.innerHTML='<span class="nashar-text">NasharHub.com</span>';}
 							var parent=link.parentElement;
 							if(parent){parent.classList.add('nashar-credit-wrap');Array.from(parent.children).forEach(function(el){if(el!==link&&/بواسطة|created by/i.test(el.textContent||'')){el.textContent='تم التصميم والتطوير بواسطة';el.classList.add('nashar-credit-label');}});}
 						});
