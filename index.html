@@ -203,8 +203,43 @@ if (window.navigation && window.self !== window.top) {
 	});
 }
 </script>
+	
+		<!-- NasharHub footer credit -->
+		<style id="nasharhub-footer-style">
+			.nashar-credit-wrap{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:.65rem;margin-top:1.5rem;padding-top:1.25rem;text-align:center;font-family:inherit}
+			.nashar-credit-label{font-size:.875rem;color:inherit;opacity:.72}
+			.nashar-credit-link{display:inline-flex!important;align-items:center;justify-content:center;text-decoration:none!important}
+			.nashar-text{display:inline-flex;align-items:center;justify-content:center;min-height:40px;padding:.58rem 1.15rem;border-radius:999px;background:linear-gradient(135deg,#22c55e,#15803d);color:#fff!important;font-size:1rem;font-weight:800;line-height:1;letter-spacing:.01em;box-shadow:0 8px 22px rgba(34,197,94,.24);transition:transform .25s ease,box-shadow .25s ease,filter .25s ease}
+			.nashar-credit-link:hover .nashar-text{transform:translateY(-2px);box-shadow:0 12px 28px rgba(34,197,94,.34);filter:brightness(1.06)}
+			.nashar-credit-link:focus-visible{outline:3px solid rgba(34,197,94,.4);outline-offset:4px;border-radius:999px}
+			@media(max-width:480px){.nashar-credit-wrap{gap:.5rem;margin-top:1.1rem;padding-top:1rem}.nashar-credit-label{width:100%;font-size:.8rem}.nashar-text{min-height:38px;padding:.55rem 1rem;font-size:.92rem}}
+		</style>
 	</head>
 	<body>
 		<div id="root"></div>
+	
+		<script id="nasharhub-footer-script">
+		(function(){
+			function applyNasharCredit(){
+				document.querySelectorAll('footer').forEach(function(footer){
+					var links=Array.from(footer.querySelectorAll('a')).filter(function(a){return /nasharhub\.com/i.test(a.href||'');});
+					if(links.length){
+						links.forEach(function(link){
+							link.classList.add('nashar-credit-link');
+							link.setAttribute('aria-label','زيارة موقع NasharHub.com');
+							link.innerHTML='<span class="nashar-text">NasharHub.com</span>';
+							var parent=link.parentElement;
+							if(parent){parent.classList.add('nashar-credit-wrap');Array.from(parent.children).forEach(function(el){if(el!==link&&/بواسطة|created by/i.test(el.textContent||'')){el.textContent='تم التصميم والتطوير بواسطة';el.classList.add('nashar-credit-label');}});}
+						});
+					}else if(!footer.querySelector('.nashar-credit-wrap')){
+						var wrap=document.createElement('div');wrap.className='nashar-credit-wrap';wrap.innerHTML='<span class="nashar-credit-label">تم التصميم والتطوير بواسطة</span><a class="nashar-credit-link" href="https://nasharhub.com/" target="_blank" rel="noopener noreferrer" aria-label="زيارة موقع NasharHub.com"><span class="nashar-text">NasharHub.com</span></a>';
+						var host=footer.querySelector('.container')||footer.firstElementChild||footer;host.appendChild(wrap);
+					}
+				});
+			}
+			applyNasharCredit();
+			var observer=new MutationObserver(applyNasharCredit);observer.observe(document.body,{childList:true,subtree:true});
+		})();
+		</script>
 	</body>
 </html>
